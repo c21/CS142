@@ -1,0 +1,43 @@
+body {
+  font-family: Tahoma;
+  font-size: 13px;
+}
+
+table {
+  width: 100%;
+  white-space: nowrap;
+  border-spacing: 0px;
+}
+
+tr.header {
+  color: #ffffff;
+  background-color: #687291;
+  text-align: left;
+}
+
+tr.body_css2 {
+  display: none;
+}
+
+th.center {
+  text-align: center;
+}
+
+td.center {
+  text-align: center;
+}
+
+div {
+  margin-top: 0px;
+  margin-right: -2px;
+  margin-bottom: -1px;
+  margin-left: -1px;
+}
+
+div.body_odd {
+  background-color: #eeeff2;
+}
+
+div.body_even {
+  background-color: #dfe1e7;
+}

@@ -1,0 +1,26 @@
+body {
+  font-family: Tahoma;
+  font-size: 13px;
+}
+
+a {
+  text-decoration: none;
+  color: #000000;
+  background-image: url(left.gif), url(right.gif), url(mid.gif);
+  background-repeat: no-repeat, no-repeat, repeat-x;
+  background-position: top left, top right, top;
+  padding: 3.5px;
+}
+
+a:hover {
+  color: #cc6600;
+}
+
+a:focus {
+  font-weight: bold;
+  background-image: url(left-selected.gif), url(right-selected.gif), url(mid-selected.gif);
+}
+
+hr {
+  margin-top:0;
+}
