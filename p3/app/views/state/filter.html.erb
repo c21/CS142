@@ -1,0 +1,12 @@
+<h1>State#filter</h1>
+<p>substring: <%= @substring %></p>
+<p>states:</p>
+<% if @state_list.empty? %>
+  <p><i>No maching states.</i></p>
+<% else %>
+  <ol>
+  <% @state_list.each do |state| %>
+    <li><%= state %></li>
+  <% end %>
+  </ol>
+<% end %> 

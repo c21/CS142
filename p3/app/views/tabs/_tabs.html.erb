@@ -1,0 +1,14 @@
+<table>
+<tr>
+<% all_tabs.each do |tab| %>
+  <td>
+  <% if tab[:label] == selected_tab %>
+    <a class="focus" href=<%= tab[:url] %>><%= tab[:label] %></a>
+  <% else %>
+    <a href=<%= tab[:url] %>><%= tab[:label] %></a>
+  <% end %>
+  </td>
+<% end %>
+</tr>
+</table>
+<hr />

@@ -1,0 +1,14 @@
+<h1>Tabs#show2</h1>
+<%= render(:partial => "tabs",
+  :locals => {
+    :all_tabs => @tab_list[0][:all_tabs],
+    :selected_tab => @tab_list[0][:selected_tab]
+  })
+%>
+
+<%= render(:partial => "tabs",
+  :locals => {
+    :all_tabs => @tab_list[1][:all_tabs],
+    :selected_tab => @tab_list[1][:selected_tab]
+  })
+%>
