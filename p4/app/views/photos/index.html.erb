@@ -1,0 +1,43 @@
+<h1>Photos#index</h1>
+
+<p>user: <%= @user %></p>
+
+<!-- Display each photo. -->
+<p>photos:</p>
+<% if @photos.empty? %>
+  <p><i>No photos.</i></p>
+<% else %>
+  <ol>
+  <% @photos.each do |photo| %>
+    <li>
+      <!-- 1. Display photo itself. -->
+      <%= image_tag photo.file_name %>
+
+      <!-- 2. Display photo's creation time. -->
+      <p>creation time: <%= "#{photo.date_time}" %></p>
+
+      <!-- 3. Display each comment. -->
+      <p>comments:</p>
+      <% if photo.comments.empty? %>
+        <p><i>No comments.</i></p>
+      <% else %>
+        <ul>
+        <% photo.comments.each do |comment| %>
+          <li>
+          <% u = comment.user %>
+            <p>
+              <!-- 3.1 Display comment's user. -->
+              <a href=<%= "/photos/index/#{u.id}" %>><%= "#{u.first_name} #{u.last_name}" %></a>
+              <!-- 3.2 Display comment's creation time. -->
+              <%= " (#{photo.date_time}): " %>
+              <!-- 3.3 Display comment itself. -->
+              <i><%= comment.comment %></i> 
+            </p>
+          </li>
+        <% end %> 
+        </ul> 
+      <% end %> 
+    </li>  
+  <% end %> 
+  </ol>
+<% end %>
