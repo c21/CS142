@@ -1,0 +1,17 @@
+<h1>Users#login</h1>
+<%= form_for(:user, url: { action: 'post_login' }) do |form| %>
+  <!-- Display error messages if any. -->
+  <% if defined?(user_error) && user_error %>
+    <p><i>Invalid user login or password.</i><p>
+  <% end %>
+
+  <%= form.label(:login) %>
+  <%= form.text_field(:login) %>
+  <br /><br />
+
+  <%= form.label(:password) %>
+  <%= form.password_field(:password) %>
+  <br /><br />
+
+  <%= form.submit("Login") %>
+<% end %>
