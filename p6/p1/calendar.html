@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>CS 142 Project 5</title>
+</head>
+<body>
+
+<div id="div1"></div>
+<div id="div2"></div>
+
+<script type="text/javascript" src="Calendar.js"></script>
+<script type="text/javascript">
+var calendar = new Calendar("div1");
+calendar.render(new Date(Date.now()));
+var calendar = new Calendar("div2");
+calendar.render(new Date("January 6, 2009"));
+</script>
+
+</body>
+</html>
