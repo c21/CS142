@@ -1,0 +1,126 @@
+<h1>Photos#index</h1>
+
+<p>user: <%= @user %></p>
+
+<!-- 4. Display photo creation link. -->
+<a href= <%= '/photos/new/' %>>New Photo</a>
+
+<!-- Display each photo. -->
+<p>photos:</p>
+<% if @photos.empty? %>
+  <p><i>No photos.</i></p>
+<% else %>
+  <ol>
+  <% @photos.each do |photo| %>
+    <li>
+      <!-- 1. Display photo. -->
+      <% tag_id = "tag_#{photo.id}" %>
+      <% tag_left_id = "photo_#{photo.id}_tag_left" %>
+      <% tag_top_id = "photo_#{photo.id}_tag_top" %>
+      <% tag_width_id = "photo_#{photo.id}_tag_width" %>
+      <% tag_height_id = "photo_#{photo.id}_tag_height" %>
+      <% tag_parent_id = "tag_parent_#{photo.id}" %>
+      <% tag_img_id = "tag_img_#{photo.id}" %>
+      
+      <div id="<%= tag_parent_id %>">
+        <!-- 1.1 Display photo itself. -->
+        <%= image_tag photo.file_name, :draggable => false, :id => tag_img_id %>
+
+        <!-- 1.2 Set photo's tag. -->
+        <div id="<%= tag_id %>" class="tag"></div>
+
+        <% namespace = "photo_#{photo.id}" %>        
+        <%= form_for(:tag, url: { action: 'post_tag' }, namespace: namespace) do |form| %>
+          <!-- 1.3 Set photo's tag attribute. -->
+          <%= form.text_field(:photo_id, :value => photo.id, :class => "tag_attr") %>
+          <%= form.text_field(:left, :class => "tag_attr") %>
+          <%= form.text_field(:top, :class => "tag_attr") %>
+          <%= form.text_field(:width, :class => "tag_attr") %>
+          <%= form.text_field(:height, :class => "tag_attr") %>
+          <!-- 1.4 Set users name list. -->
+          <% default_option = "-- Select User for Tag --" %>
+          <% user_name_list = [[default_option, disabled: true]] %>
+          <% User.all.each do |u|
+              user_name_list << ["#{u.first_name} #{u.last_name}"]
+          end %>
+          <%= form.select(:user_name, user_name_list, :selected => default_option) %>
+          <!-- 1.5 Set tag's submit button. -->
+          <%= form.submit("Save Selected Tag") %>
+        <% end %>
+
+        <!-- 1.6 Get photo's all existing tags, generated as div(s). -->
+        <% tags = Tag.where(photo_id: photo.id) %>
+        <% tags.each do |t| %>
+          <div id=<%= "#{namespace}_tag_#{t.id}_username" %> class="tag"
+            style=<%= "left:#{t.left}px;top:#{t.top-35}px" %>>
+            <font size="5" color="red"><%= t.user_name %></font>
+          </div>
+          <div id=<%= "#{namespace}_tag_#{t.id}" %> class="tag"
+            style=<%= "left:#{t.left}px;top:#{t.top}px;width:#{t.width}px;height:#{t.height}px;" %>>
+          </div>
+        <% end %>
+        <!-- 1.7 Set Photo's show/hide tags buttons -->
+        <br />
+        <button onclick= <%= "showTags#{photo.id}()" %>>Show All Tags</button>
+        <button onclick= <%= "hideTags#{photo.id}()" %>>Hide All Tags</button>
+      </div>
+      
+      <!-- 1.7 Set tag's event handler --> 
+      <script type="text/javascript">
+        new Tagger("<%= tag_img_id %>", "<%= tag_id %>", "<%= tag_left_id %>",
+          "<%= tag_top_id %>", "<%= tag_width_id %>", "<%= tag_height_id %>");
+
+        function showTags<%= photo.id %>() {
+          <% tags.each do |t| %>
+            <% tag_name = "#{namespace}_tag_#{t.id}" %>
+            var div_<%= tag_name %> = document.getElementById("<%= tag_name %>");
+            div_<%= tag_name %>.style.display = "inline";
+            var div_username_<%= tag_name %> = document.getElementById("<%= "#{tag_name}_username" %>");
+            div_<%= tag_name %>.onmousemove = function() {
+              div_username_<%= tag_name %>.style.display = "inline"; 
+            }
+            div_<%= tag_name %>.onmouseleave = function() {
+              div_username_<%= tag_name %>.style.display = "none"; 
+            } 
+          <% end %>
+        }
+
+        function hideTags<%= photo.id %>() {
+          <% tags.each do |t| %>
+            <% tag_name = "#{namespace}_tag_#{t.id}" %>
+            var div_<%= tag_name %> = document.getElementById("<%= tag_name %>");
+            div_<%= tag_name %>.style.display = "none";
+          <% end %> 
+        }        
+      </script> 
+      
+      <!-- 2. Display photo's creation time. -->
+      <p>creation time: <%= "#{photo.date_time}" %></p>
+
+      <!-- 3. Display each comment. -->
+      <p>comments:</p>
+      <% if photo.comments.empty? %>
+        <p><i>No comments.</i></p>
+      <% else %>
+        <ul>
+        <% photo.comments.each do |comment| %>
+          <li>
+          <% u = comment.user %>
+            <p>
+              <!-- 3.1 Display comment's user. -->
+              <a href=<%= "/photos/index/#{u.id}" %>><%= "#{u.first_name} #{u.last_name}" %></a>
+              <!-- 3.2 Display comment's creation time. -->
+              <%= " (#{comment.date_time}): " %>
+              <!-- 3.3 Display comment itself. -->
+              <i><%= comment.comment %></i> 
+            </p>
+          </li>
+        <% end %> 
+        </ul> 
+      <% end %>
+      <!-- 4. Display comment creation link. -->
+      <a href= <%= "/comments/new/#{photo.id}" %>>New Comment</a>
+    </li>  
+  <% end %> 
+  </ol>
+<% end %>

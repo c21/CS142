@@ -1,0 +1,27 @@
+<h1>Users#new</h1>
+<%= form_for(@user, method: :post, url: { action: 'create' }) do |form| %>
+  <% @user.errors.full_messages.each do |msg| %>
+    <p><%= msg %></p>
+  <% end %>
+  <%= form.label(:first_name) %>
+  <%= form.text_field(:first_name) %>
+  <br /><br />
+
+  <%= form.label(:last_name) %>
+  <%= form.text_field(:last_name) %>
+  <br /><br />
+
+  <%= form.label(:login) %>
+  <%= form.text_field(:login) %>
+  <br /><br />
+
+  <%= form.label(:password) %>
+  <%= form.password_field(:password) %>
+  <br /><br />
+
+  <%= form.label(:password_confirmation) %>
+  <%= form.password_field(:password_confirmation) %>
+  <br /><br /> 
+
+  <%= form.submit("Sign Up") %>
+<% end %>

@@ -1,0 +1,12 @@
+<h1>Photos#new</h1>
+<%= form_for(:photo, url: { action: 'create' }) do |form| %>
+  <!-- Display error messages if any. -->
+  <% if defined?(user_error) && user_error %>
+    <p><i>Invalid user.</i><p>
+  <% end %>
+  <% if defined?(photo_error) && photo_error %>
+    <p><i>Invalid photo.</i><p>
+  <% end %>
+  <%= form.file_field(:photo_file) %>
+  <%= form.submit("Upload Photo") %>
+<% end %>
