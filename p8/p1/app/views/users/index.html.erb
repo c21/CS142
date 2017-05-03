@@ -1,0 +1,34 @@
+<h1>Users#index</h1>
+<p>users:</p>
+<ol>
+<% @users.each do |user| %>
+  <li>
+  <a href=<%= "/photos/index/#{user.id}" %>><%= "#{user.first_name} #{user.last_name}" %></a>
+  </li>
+<% end %>
+</ol>
+
+<p>search:</p>
+<input type="text" onkeyup="searchPhoto(this.value)" />
+
+<!-- Container of matched photos. -->
+<% photos_p_id = "photos_p" %>
+<p id="<%= photos_p_id %>"></p>
+
+<script type="text/javascript">
+
+function searchPhoto(str) {
+  var req = new XMLHttpRequest();
+  req.onreadystatechange = function() {
+    if (req.readyState == 4 && req.status == 200) {
+      var parser = new DOMParser();
+      var reqDocument = parser.parseFromString(req.responseText, "text/html");
+      document.getElementById("<%= photos_p_id %>").innerHTML =
+        reqDocument.getElementById("photos_div").outerHTML;
+    }
+  }
+  req.open("GET", "/photos/search?s=" + str, true);
+  req.send(); 
+}
+
+</script>

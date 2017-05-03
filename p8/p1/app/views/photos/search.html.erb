@@ -1,0 +1,10 @@
+<div id="photos_div" style="display:block; width:1500px; margin:20px;">
+  <% @photos.each do |photo| %>
+    <div style="float:left; padding:10px; height:100px; width:100px;">
+      <a href= <%= "/photos/index/#{photo.user_id}" %>>
+        <%= image_tag photo.file_name,
+          :style => "max-width:100%; max-height:100%;" %>
+      </a>
+    </div>
+  <% end %>  
+</div>

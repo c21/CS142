@@ -1,0 +1,21 @@
+<h1>Comments#new</h1>
+<% photo = Photo.find_by(id: @comment.photo_id) %>
+<% user = User.find_by(id: @comment.user_id) %>
+<% if photo.nil? %>
+  <p><i>Invalid photo.</i></p>
+<% elsif user.nil? %>
+  <p><i>Invalid user.</i></p>
+<% else %>
+  <%= form_for(@comment, method: :post, url: { action: 'create', id: @comment.photo_id }) do |form| %>
+    <!-- Display photo. -->
+    <%= image_tag photo.file_name %>
+    <br />
+    <% @comment.errors.full_messages.each do |msg| %>
+      <p><%= msg %></p>
+    <% end %>
+    <%= form.text_area(:comment, size: "40x6") %>
+    <br />
+    <%= form.submit("Create A Comment") %>
+  <% end %> 
+<% end %>
+
